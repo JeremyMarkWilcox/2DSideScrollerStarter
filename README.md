@@ -1,8 +1,37 @@
-# Game Foundation
+# 2DSideScrollerStarter
 
-A small Godot 4.7.2 .NET / C# starting framework for team projects. Desktop is the validated target. .NET 8 SDK is required (Android configuration targets .NET 9 but is not validated here).
+**Status: planned—perspective gameplay not implemented.**
 
-## Start here
+A starting point for 2D side-view games with grounded movement and jumping. The goal is a responsive, configurable platforming example that a team can understand and adapt without inheriting a large collection of unrelated mechanics.
+
+## Purpose and planned direction
+
+- Build horizontal movement, gravity, floor/wall/ceiling handling and tunable jumping with keyboard and controller input.
+- Add jump buffering, coyote time and variable jump height as the movement is refined; expose their settings rather than hardcoding game-specific values.
+- Provide facing and idle/run/jump/fall animation hooks, a following camera with limits, and a small test course.
+- Exercise slopes, one-way and moving platforms, hazards, checkpoints and respawn. Connect the example to the inherited pause, restart, scene-transition and save flows.
+
+Double jumps, wall jumps, dashes, ladders, swimming and combat are possible later modules. They are not required just because the game is a side-scroller. These goals remain open to refinement through playtesting.
+
+## Presentation
+
+Pixel art is the preferred direction for this 2D starter. The pixel preset has **not yet been applied**: the copied project currently uses `canvas_items` / `expand`. Choose the art resolution before tuning camera framing and UI; 640 × 360 is a suggested starting point.
+
+Raster art will remain a setup choice in this same repository. See the [setup guide](docs/PROJECT_SETUP.md) for resolution, stretch and filtering guidance.
+
+## What will demonstrate readiness
+
+The test course should make jump timing, slopes, platform behavior and respawn easy to check. Verify that confirming or closing a menu cannot trigger an unintended jump, then test camera behavior, save/continue and a clean desktop export with keyboard and controller.
+
+## Available now: the inherited foundation
+
+This repository currently launches the GameFoundation menu/demo scene, not a perspective-specific game. New Game opens that demo; the player controller and camera described above are planned work.
+
+The copied foundation includes title/pause/settings menus, keyboard and controller menu confirmation/back, scene transitions, persistent volume/fullscreen and Save-action bindings, a versioned save backend and Continue, optional UI audio, and a shared Theme. Its regression scene is included. Existing validation records describe foundation checks, not certification of this starter's future gameplay.
+
+## Run the included foundation demo
+
+Requirements: the .NET build of Godot 4.7.2 and .NET 8 SDK for desktop. Android configuration targets .NET 9 but has not been validated here. Gameplay movement bindings will be documented when implemented; the current controls below operate the foundation demo.
 
 1. Import `project.godot` into the **.NET** build of Godot 4.7.2.
 2. Click **Build**, then **F5**. The title scene includes Settings as a sibling menu.
@@ -10,12 +39,6 @@ A small Godot 4.7.2 .NET / C# starting framework for team projects. Desktop is t
 4. In gameplay, **F5 / controller Y** saves. Return to Title and choose Continue. Settings includes a Save-action rebind button; Escape/B cancels listening.
 
 The solution currently retains its original `Main Menu.sln` filename. This does not affect the project name or behavior.
-
-## One maintained foundation
-
-Keep one general template. Create a copy when beginning a game or the next focused perspective starter, then choose its presentation settings and add only the player, camera and plugins it needs. Do not maintain parallel Pixel/Raster/3D copies just for presentation settings.
-
-See `docs/PROJECT_SETUP.md` for the Pixel, Raster and 3D settings guide. The documented 640×360 Pixel resolution is a suggested starting point, not a confirmed personal preference. Perspective-specific controllers and camera rigs are future work. The owner will build and test small playable examples one at a time before handing mature starters to other developers.
 
 ## Assign references in the Inspector
 
@@ -45,10 +68,16 @@ SaveManager supports numbered slots, schema version 1, temporary-file replacemen
 
 Save data strings (JSON keys, paths stored on disk), log messages, labels, and engine property names are intentional strings. Editable scene, node and menu dependencies are Inspector references.
 
-## Verification and maintenance
+## Development and handoff
 
-See [the proposed starter roadmap](docs/STARTER_ROADMAP.md) for the build order to discuss, repository hierarchy, and README requirements for future developers.
+Build and test one small playable example before expanding the feature list. The owner will validate this starter before handing it to other developers. Update this README as features move from planned to implemented, including exact controls, Inspector assignments, screenshots and limitations.
 
-See `docs/SMOKE_TESTS.md` for automated and manual checks, `docs/GDD_TEMPLATE.md` for new-game planning, and `docs/FRAMEWORK_STATUS.md` for scope.
+The [GDD](https://docs.google.com/document/d/1Om7zLuNNLW-n-AbYMff3WZQE9F3F2vL3bwv_7Om-bNg/edit) is the source of truth for scope and decisions; this README describes what this repository currently runs. The copied [starter roadmap](docs/STARTER_ROADMAP.md) is planning background and may predate repository creation. See [acceptance checks](docs/SMOKE_TESTS.md), [foundation scope](docs/FRAMEWORK_STATUS.md), and the [new-game GDD outline](docs/GDD_TEMPLATE.md).
 
-Make common fixes in this foundation first, run the checks, then bring the relevant files into each active project. Do not replace a game's entire customized UI/configuration when updating shared scripts. Create each new copy intentionally when that game or starter becomes the active task. Keep a foundation version or source commit in its README and GDD.
+Keep common fixes in [GameFoundation](https://github.com/JeremyMarkWilcox/GameFoundation), then deliberately bring the relevant changes into this starter and rerun its checks. Template-generated projects do not receive those changes automatically. The verified starting version is [GameFoundation b2e2268](https://github.com/JeremyMarkWilcox/GameFoundation/commit/b2e2268a29befda4821949256e8182c8b67f2c3b). See [the foundation version record](docs/FOUNDATION_VERSION.md) for the exact source, verification and update procedure.
+
+When creating a game from this starter, rename the Godot application before saving, replace the demo with the game's own scene, and give it its own repository. Preserve third-party licenses. Add optional plugins only after checking compatibility and documenting their setup and dependencies.
+
+## GDScript integration
+
+Gameplay can use GDScript with the shared C# globals. See [the integration guide](docs/GDSCRIPT_INTEGRATION.md) for Inspector composition, save access, signals and the runnable example. Godot .NET and a C# build remain required.
